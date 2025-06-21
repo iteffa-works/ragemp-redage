@@ -5,8 +5,8 @@
   "Multiplier": 1,
   "HappyHoursRB": 50,
   "Name": "Donate",
-  "Server": "185.71.65.232",
+  "Server": "127.0.0.1",
   "DataBase": "payments",
-  "User": "donysnp",
-  "Password": "k3zX77zWuxLauNLW"
+  "User": "root",
+  "Password": ""
 }

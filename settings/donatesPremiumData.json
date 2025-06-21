@@ -1,26 +1,26 @@
 ﻿[
   {
-    "Price": 14999,
-    "GiveRb": 150,
-    "GiveMoney": 20000
+    "Price": 2499,
+    "GiveRb": 35,
+    "GiveMoney": 15000
   },
   {
-    "Price": 1500,
+    "Price": 299,
     "GiveRb": 0,
     "GiveMoney": 500
   },
   {
-    "Price": 3500,
+    "Price": 499,
     "GiveRb": 0,
     "GiveMoney": 750
   },
   {
-    "Price": 5000,
+    "Price": 699,
     "GiveRb": 0,
     "GiveMoney": 1000
   },
   {
-    "Price": 10000,
+    "Price": 999,
     "GiveRb": 0,
     "GiveMoney": 1500
   }
