@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "b": "webpack-cli --config ./webpack.config.js --mode=production"
+    "build": "webpack-cli --config ./webpack.config.js --mode=production"
   },
   "dependencies": {
     "webpack-cli": "^4.9.1"
