@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const mode = process.env.NODE_ENV || 'development';
 const prod = mode === 'production';
 
-const urlPath = `https://cdn.iteffa.com/`
+const urlPath = `/`
 
 module.exports = {
     entry: {
@@ -24,9 +24,8 @@ module.exports = {
         },
     },
     output: {
-        //path: path.resolve(__dirname, 'public'),
         path: path.resolve(__dirname, "../../client_packages/interface"),
-		filename: `builden/bundle.js`,
+		filename: `build/bundle.js`,
         libraryTarget: "umd",
     },
     plugins: [
@@ -37,7 +36,7 @@ module.exports = {
             inject: false,
         }),
         new MiniCssExtractPlugin({ 
-            filename: `builden/bundle.css`
+            filename: `build/bundle.css`
         })
     ],
     module: {
