@@ -79,7 +79,7 @@ namespace NeptuneEvo.Players.Phone
             var phoneData = new PhoneData();
             try
             {
-                var phoneInfo = await db.PhoneInfo
+                var phoneInfo = await db.Phoneinfo
                     .Where(pi => pi.Uuid == uuid)
                     .FirstOrDefaultAsync();
 
@@ -109,7 +109,7 @@ namespace NeptuneEvo.Players.Phone
                     }
                     phoneData.PhoneContacts = contacts;
                 
-                    await db.InsertAsync(new PhoneInfo
+                    await db.InsertAsync(new Phoneinfoes
                     {
                         Uuid = uuid,
                         Contacts = ContactsJson(contacts),
@@ -135,7 +135,7 @@ namespace NeptuneEvo.Players.Phone
 
                 if (phoneData != null)
                 {
-                    await db.PhoneInfo
+                    await db.Phoneinfo
                         .Where(pi => pi.Uuid == uuid)
                         .Set(pi => pi.BlackList, JsonConvert.SerializeObject(phoneData.BlackList))
                         .Set(pi => pi.Contacts, ContactsJson(phoneData.PhoneContacts))

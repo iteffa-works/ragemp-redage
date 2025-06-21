@@ -22,7 +22,7 @@ namespace NeptuneEvo.Players.Phone.Messages
             var phoneMessageListData = new List<PhoneMessageListData>();
             try
             {
-                var phoneMessages = await db.PhoneMessage
+                var phoneMessages = await db.Phonemessage
                     .Where(pm => (pm.FromPhone == phone && pm.FromUuid == uuid) || (pm.ToPhone == phone && pm.ToUuid == uuid))
                     .OrderByDescending(pm => pm.AutoId)
                     .Select(pm => new
@@ -75,7 +75,7 @@ namespace NeptuneEvo.Players.Phone.Messages
             
                 await using var db = new ServerBD("MainDB");//В отдельном потоке
 
-                var messages = await db.PhoneMessage
+                var messages = await db.Phonemessage
                     .Where(pm =>
                         (pm.FromUuid == characterData.UUID && pm.FromPhone == characterData.Sim && pm.ToPhone == number) ||
                         (pm.ToUuid == characterData.UUID && pm.ToPhone == characterData.Sim && pm.FromPhone == number))
@@ -106,7 +106,7 @@ namespace NeptuneEvo.Players.Phone.Messages
         }
         
         //
-        private static List<PhoneMessages> InsertMessagesList = new List<PhoneMessages>();
+        private static List<Phonemessages> InsertMessagesList = new List<Phonemessages>();
         public static bool IsCountInsertMessages() => InsertMessagesList.Count > 0;
         public static async Task InsertMessages(ServerBD db)
         {
@@ -143,7 +143,7 @@ namespace NeptuneEvo.Players.Phone.Messages
                     var toUuid = Convert.ToInt32(message[2]);
                     var toPhone = Convert.ToInt32(message[3]);
 
-                    await db.PhoneMessage
+                    await db.Phonemessage
                         .Where(pm =>
                             pm.FromUuid == fromUuid && pm.FromPhone == fromPhone && pm.ToUuid == toUuid &&
                             pm.ToPhone == toPhone)
@@ -189,7 +189,7 @@ namespace NeptuneEvo.Players.Phone.Messages
 
             if (Main.SimCards.ContainsKey(sim))
             {
-                InsertMessagesList.Add(new PhoneMessages
+                InsertMessagesList.Add(new Phonemessages
                 {
                     FromUuid = 0,
                     FromPhone = number,
@@ -225,7 +225,7 @@ namespace NeptuneEvo.Players.Phone.Messages
                     if (phoneData.SelectedNumber != characterData.Sim)
                         Settings.Repository.PlayNotify(player);
                 
-                    InsertMessagesList.Add(new PhoneMessages
+                    InsertMessagesList.Add(new Phonemessages
                     {
                         FromUuid = 0,
                         FromPhone = number,
@@ -302,7 +302,7 @@ namespace NeptuneEvo.Players.Phone.Messages
 
             UpdateMessageStatus(player, number, key, dateJson, status: MessageStatus.Received);
 
-            InsertMessagesList.Add(new PhoneMessages
+            InsertMessagesList.Add(new Phonemessages
             {
                 FromUuid = characterData.UUID,
                 FromPhone = characterData.Sim,
@@ -387,7 +387,7 @@ namespace NeptuneEvo.Players.Phone.Messages
             
             UpdateMessageStatus(player, number, key, dateJson, status: MessageStatus.Received);
             
-            InsertMessagesList.Add(new PhoneMessages
+            InsertMessagesList.Add(new Phonemessages
             {
                 FromUuid = characterData.UUID,
                 FromPhone = characterData.Sim,

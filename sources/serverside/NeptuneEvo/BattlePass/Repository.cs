@@ -80,7 +80,7 @@ namespace NeptuneEvo.BattlePass
             }*/
 
 
-            var bpTask = await db.BpTask
+            var bpTask = await db.Bptask
                 .ToListAsync();
 
             foreach (var item in bpTask)
@@ -95,7 +95,7 @@ namespace NeptuneEvo.BattlePass
 
             //
 
-            var bpAwards = await db.BpAwards
+            var bpAwards = await db.Bpawards
                 .ToListAsync();
 
             foreach (var item in bpAwards)
@@ -117,7 +117,7 @@ namespace NeptuneEvo.BattlePass
 
             //
 
-            var bpAwardsPremium = await db.BpAwardsPremium
+            var bpAwardsPremium = await db.Bpawardspremium
                 .ToListAsync();
 
             foreach (var item in bpAwardsPremium)

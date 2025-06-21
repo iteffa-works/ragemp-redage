@@ -79,7 +79,7 @@ namespace NeptuneEvo.Players.Phone.Tinder
 
                     var tinder = List[uuid];
                     
-                    await db.PhoneTinder
+                    await db.Phonetinder
                         .Where(dc => dc.Uuid == uuid)
                         .Set(dc => dc.Avatar, tinder.Avatar)
                         .Set(dc => dc.Text, tinder.Text)
@@ -303,7 +303,7 @@ namespace NeptuneEvo.Players.Phone.Tinder
                     {
                         await using var db = new ServerBD("MainDB");//В отдельном потоке
 
-                        db.Insert(new PhoneTinders
+                        db.Insert(new Phonetinders
                         {
                             Uuid = characterData.UUID,
                             Avatar = tinderData.Avatar,

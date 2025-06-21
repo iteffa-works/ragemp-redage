@@ -2,7 +2,7 @@
   "OtherList": [],
   "Name": "MainDB",
   "Server": "127.127.126.8",
-  "DataBase": "ra3_main",
+  "DataBase": "main",
   "User": "root",
   "Password": ""
 }

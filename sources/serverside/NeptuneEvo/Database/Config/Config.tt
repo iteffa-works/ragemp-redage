@@ -21,9 +21,9 @@
 	// Enables generation of associations as extension methods for related table mapping classes
 	GenerateAssociationExtensions = false;
 	
-	//LoadMySqlMetadata("51.195.103.80", "rrp", "TestBD", "IX4nTe28pw73bwz0");
+	// MySQL
 
-	LoadMySqlMetadata("127.0.0.1", "mainconfig", "root", "");
-	//LoadMySqlMetadata("127.0.0.1", "server1config", "root", "");
+	LoadMySqlMetadata("127.127.126.8", "mainconfig", "root", "");
+
 	GenerateModel();
 #>
