@@ -32,16 +32,15 @@ namespace NeptuneEvo.Accounts.Email
             if (hash != null && EmailsVerification.ContainsKey(hash))
                 EmailsVerification.Remove(hash);
 
+            hash = Accounts.Repository.GetSha256($"{DateTime.Now.Ticks}_{Main.ServerNumber}_{login}_{email}");
+            var time = DateTime.Now.AddMinutes(15);
+            /*
             await using var webSiteBD = new WebSiteBD("WebSiteBD");
 
             await webSiteBD
                 .VerifyConfirm
                 .Where(vc => vc.Socialclub == sessionData.RealSocialClub)
                 .DeleteAsync();
-
-            hash = Accounts.Repository.GetSha256($"{DateTime.Now.Ticks}_{Main.ServerNumber}_{login}_{email}");
-
-            var time = DateTime.Now.AddMinutes(15);
             
             await webSiteBD.InsertAsync(new VerifyConfirms
             {
@@ -52,7 +51,7 @@ namespace NeptuneEvo.Accounts.Email
                 ServerId = (sbyte) Main.ServerNumber,
                 Type = (sbyte) type
             });
-                
+                */
             EmailsVerification.Add(hash, new EmailVerification
             {
                 Player = player,
@@ -78,7 +77,7 @@ namespace NeptuneEvo.Accounts.Email
             if (hash != null && EmailsVerification.ContainsKey(hash))
             {
                 EmailsVerification.Remove(hash);            
-                
+                /*
                 Trigger.SetTask(async () =>
                 {
                     await using var webSiteBD = new WebSiteBD("WebSiteBD");
@@ -89,16 +88,19 @@ namespace NeptuneEvo.Accounts.Email
                         .Where(vc => vc.Hash == hash)
                         .DeleteAsync();
                 });
+                */
             }
         }
         public static async Task VerificationsDelete()
         {            
+            /*
             await using var webSiteBD = new WebSiteBD("WebSiteBD");
                     
             await webSiteBD
                 .VerifyConfirm
                 .Where(vc => vc.ServerId == Main.ServerNumber)
                 .DeleteAsync();
+            */
         }
         public static EmailVerification GetVerification(string hash, bool isRegistered = true)
         {
@@ -126,13 +128,14 @@ namespace NeptuneEvo.Accounts.Email
 
             if (confirms.Count > 0)
             {
+                /*
                 await using var webSiteBD = new WebSiteBD("WebSiteBD");
 
                 await webSiteBD.VerifyConfirm
                     .Where(vc => vc.ServerId == Main.ServerNumber)
                     .Where(vc => vc.Data < DateTime.Now)
                     .DeleteAsync();
-                
+                */
                 Trigger.SetMainTask(() =>
                 {
                     foreach (var hash in confirms)

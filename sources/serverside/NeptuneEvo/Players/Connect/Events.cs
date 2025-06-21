@@ -18,11 +18,12 @@ namespace NeptuneEvo.Players.Connect
         private static readonly nLog Log = new nLog("Players.Connect.Events");
         
         [ServerEvent(Event.PlayerConnected)]
+
         private void OnPlayerConnected(ExtPlayer player)
         {
             if (player == null)
                 return;
-            
+
             if (player.IsSessionData())
             {
                 Log.Write($"OnPlayerConnected error, player ({player.Name} | {player.Value} | {player.SocialClubName}) already contains somehow?!");
@@ -30,18 +31,17 @@ namespace NeptuneEvo.Players.Connect
                 return;
             }
 
-            
             Trigger.Dimension(player, Dimensions.RequestPrivateDimension(player.Value));
-            
+
             World.Weather.Repository.Init(player);
-            
+
             Trigger.ClientEvent(player, "client.init",
                  Main.ServerSettings.ServerId,
                  Main.ServerSettings.ServerName,
                  Main.DonateSettings.Multiplier,
                  Main.DonateSettings.Convert,
                  Main.ServerSettings.IsMerger);
-            
+
             if (Admin.IsServerStoping)
             {
                 Trigger.ClientEvent(player, "restart");

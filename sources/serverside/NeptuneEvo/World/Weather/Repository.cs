@@ -107,7 +107,7 @@ namespace NeptuneEvo.World.Weather
             }
             
             var weatherData = weatherRandom[0];
-            if (weatherData.WeatherId == (int)GTANetworkAPI.Weather.CLEAR) 
+            if (weatherData.WeatherId == (int)GTANetworkAPI.Weather.XMAS) 
                 NAPI.World.SetWeather((GTANetworkAPI.Weather) weatherData.WeatherId); // FTW?
 
             WeatherRandom = weatherRandom;
@@ -190,7 +190,7 @@ namespace NeptuneEvo.World.Weather
                 Trigger.ClientEventForAll("SetWeather", WeatherRandom[0].WeatherId, WeatherRandom[1].WeatherId, NextTime);
                 
                 if (new[] {10, 11, 12, 13}.Contains(WeatherRandom[0].WeatherId)) 
-                    NAPI.World.SetWeather(GTANetworkAPI.Weather.CLEAR); 
+                    NAPI.World.SetWeather(GTANetworkAPI.Weather.XMAS); 
 
                 //
 
@@ -257,10 +257,10 @@ namespace NeptuneEvo.World.Weather
                 return false;
             
             if (new[] {10, 11, 12, 13}.Contains(CustomWeather) && new[] {10, 11, 12, 13}.Contains(weatherId) == false) 
-                NAPI.World.SetWeather(GTANetworkAPI.Weather.CLEAR);
+                NAPI.World.SetWeather(GTANetworkAPI.Weather.XMAS);
             
             if (new[] {10, 11, 12, 13}.Contains(weatherId) && new[] {10, 11, 12, 13}.Contains(weatherData.WeatherId) == false) 
-                NAPI.World.SetWeather(GTANetworkAPI.Weather.CLEAR);
+                NAPI.World.SetWeather(GTANetworkAPI.Weather.XMAS);
             
             //
             

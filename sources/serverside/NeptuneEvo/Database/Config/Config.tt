@@ -23,7 +23,7 @@
 	
 	// MySQL
 
-	LoadMySqlMetadata("127.127.126.8", "mainconfig", "root", "");
+	LoadMySqlMetadata("127.127.126.8", "ra3_mainconfig", "root", "");
 
 	GenerateModel();
 #>

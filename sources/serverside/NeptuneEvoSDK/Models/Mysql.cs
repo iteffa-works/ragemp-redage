@@ -2,10 +2,10 @@
 {
     public class Mysql
     {
-        public string Name = "MainDB";
-        public string Server = "localhost";
-        public string DataBase = "main";
-        public string User = "root";
+        public string Name = "";
+        public string Server = "";
+        public string DataBase = "";
+        public string User = "";
         public string Password = "";
     }
 }

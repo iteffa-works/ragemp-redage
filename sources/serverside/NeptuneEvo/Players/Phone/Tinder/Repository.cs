@@ -27,7 +27,7 @@ namespace NeptuneEvo.Players.Phone.Tinder
             
             using MySqlCommand cmd = new MySqlCommand()
             {
-                CommandText = "SELECT * FROM `phoneTinder`"
+                CommandText = "SELECT * FROM `phonetinder`"
             };
             using DataTable result = MySQL.QueryRead(cmd);
 

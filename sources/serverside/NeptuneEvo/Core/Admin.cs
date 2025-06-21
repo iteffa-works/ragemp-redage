@@ -424,7 +424,11 @@ namespace NeptuneEvo.Core
                     }
                     
                     Log.Write($"[{DateTime.Now - speedSave}] All players saved!", nLog.Type.Success);
-                    
+
+                    // Сброс участия в колесе удачи
+                    await Character.Save.Repository.ResetLuckyWheel();
+                    //
+
                     await Accounts.Email.Repository.VerificationsDelete();
                     
                     BusinessManager.SavingBusiness();
@@ -492,7 +496,7 @@ namespace NeptuneEvo.Core
                 }
                 using(StreamWriter saveCoords = new StreamWriter("coords.txt", true, Encoding.UTF8))
                 {
-                    saveCoords.Write($"{msg}: new Vector3({pos.X}, {pos.Y}, {pos.Z}),\r\n");
+                    saveCoords.Write($"{msg}: new Vector3({pos.X}, {pos.Y}, {pos.Z}), new Vector3({rot.X}, {rot.Y}, {rot.Z})\r\n");
                     saveCoords.Close();
                 }
             }

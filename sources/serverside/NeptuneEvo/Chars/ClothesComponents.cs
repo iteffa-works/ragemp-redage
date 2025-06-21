@@ -900,46 +900,46 @@ namespace NeptuneEvo.Chars
         { 
             { true, new Dictionary<ClothesComponent, int>() 
                 {//Man 
-                    { ClothesComponent.Hat, 186 }, //+
-                    { ClothesComponent.Torsos, 197 }, 
-                    { ClothesComponent.Legs, 159 },  //+
-                    { ClothesComponent.Shoes, 125 }, //+
-                    { ClothesComponent.Accessories, 166 }, //+
-                    { ClothesComponent.BodyArmors, 60 }, 
-                    { ClothesComponent.Tops, 441 }, // +
-                    { ClothesComponent.Undershirts, 188 }, 
-                    { ClothesComponent.Masks, 215 },//+
+                    { ClothesComponent.Hat, 247 }, //+
+                    { ClothesComponent.Torsos, 215 }, 
+                    { ClothesComponent.Legs, 222 },  //+
+                    { ClothesComponent.Shoes, 160 }, //+
+                    { ClothesComponent.Accessories, 201 }, //+
+                    { ClothesComponent.BodyArmors, 62 }, 
+                    { ClothesComponent.Tops, 589 }, // +
+                    { ClothesComponent.Undershirts, 216 }, 
+                    { ClothesComponent.Masks, 247 },//+
                     { ClothesComponent.Ears, 42 }, 
-                    { ClothesComponent.Watches, 57}, //+
-                    { ClothesComponent.Glasses, 46 }, 
+                    { ClothesComponent.Watches, 49}, //+
+                    { ClothesComponent.Glasses, 59 }, 
 
-                    { ClothesComponent.Bugs,110 }, 
+                    { ClothesComponent.Bugs,111 }, 
 
-                    { ClothesComponent.Bracelets, 20 }, 
+                    { ClothesComponent.Bracelets, 16 }, 
      
-                    { ClothesComponent.Decals, 133 }, 
+                    { ClothesComponent.Decals, 258 }, 
                 } 
             }, 
             { false, new Dictionary<ClothesComponent, int>() 
                 { 
-                    { ClothesComponent.Hat, 185 }, //+
-                    { ClothesComponent.Torsos, 243 }, 
-                    { ClothesComponent.Legs, 168 },  //+
-                    { ClothesComponent.Shoes, 129 }, //+
-                    { ClothesComponent.Accessories, 135 }, //a
-                    { ClothesComponent.BodyArmors, 58 }, 
-                    { ClothesComponent.Tops, 472 }, //+
-                    { ClothesComponent.Undershirts, 233 }, 
-                    { ClothesComponent.Masks,  216}, //+
+                    { ClothesComponent.Hat, 246 }, //+
+                    { ClothesComponent.Torsos, 249 }, 
+                    { ClothesComponent.Legs, 235 },  //+
+                    { ClothesComponent.Shoes, 168 }, //+
+                    { ClothesComponent.Accessories, 171 }, //a
+                    { ClothesComponent.BodyArmors, 62 }, 
+                    { ClothesComponent.Tops, 632 }, //+
+                    { ClothesComponent.Undershirts, 262 }, 
+                    { ClothesComponent.Masks,  248}, //+
                     { ClothesComponent.Ears, 23 }, 
-                    { ClothesComponent.Watches, 70 }, //+
-                    { ClothesComponent.Glasses, 48 }, //+
+                    { ClothesComponent.Watches, 38 }, //+
+                    { ClothesComponent.Glasses, 61 }, //+
 
-                    { ClothesComponent.Bugs, 110 },     
+                    { ClothesComponent.Bugs, 111 },     
 
-                    { ClothesComponent.Bracelets, 29 }, 
+                    { ClothesComponent.Bracelets, 23 }, 
      
-                    { ClothesComponent.Decals, 153 }, 
+                    { ClothesComponent.Decals, 275 }, 
                 }
             },
         }; 
@@ -947,7 +947,7 @@ namespace NeptuneEvo.Chars
         {
             try
             {
-                return Variation != -1 ? Variation : (MaxClothesComponent[gender][ClothesComponent] + VariationCustom);
+                return Variation != -1 ? Variation : (MaxClothesComponent[gender][ClothesComponent] + VariationCustom) - 1;
             }
             catch (Exception e)
             {
@@ -1548,6 +1548,23 @@ namespace NeptuneEvo.Chars
             }
         }
 
+        [Command("clothoff")]
+        public static void CMD_clothesOffsets(ExtPlayer player)
+        {
+            try
+            {
+                if (!player.IsCharacterData()) return;
+                else if (!CommandsAccess.CanUseCmd(player, AdminCommands.Tsc)) return;
+
+                Trigger.ClientEvent(player, "clothes.getOffsets");
+            }
+            catch (Exception e)
+            {
+                Log.Write($"CMD_clothesOffsets Exception: {e.ToString()}");
+            }
+
+        }
+
         [Command(AdminCommands.Tsc)]
         public static void CMD_clothesEditor(ExtPlayer player)
         {
@@ -1713,6 +1730,7 @@ namespace NeptuneEvo.Chars
                 }
             }
         };
+        
         public static ConcurrentDictionary<bool, ConcurrentDictionary<BarberComponent, ConcurrentDictionary<int, BarberData>>> BarberComponentData = new ConcurrentDictionary<bool, ConcurrentDictionary<BarberComponent, ConcurrentDictionary<int, BarberData>>>();
         public static ConcurrentDictionary<bool, Dictionary<string, List<List<object>>>> BarberComponentPriceData =
             new ConcurrentDictionary<bool, Dictionary<string, List<List<object>>>>();

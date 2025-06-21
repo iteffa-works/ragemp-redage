@@ -500,9 +500,9 @@ namespace NeptuneEvo.Functions
     {
         class InteractionAttributeData
         {
-                public MethodInfo Method { get; }
-                public Delegate FastInvokeHandler { get; }
-                public object Instance { get; internal set; }
+            public MethodInfo Method { get; }
+            public Delegate FastInvokeHandler { get; }
+            public object Instance { get; internal set; }
             public InteractionAttributeData(MethodInfo method, Delegate fastInvokeHandler)
             {
                 Method = method;

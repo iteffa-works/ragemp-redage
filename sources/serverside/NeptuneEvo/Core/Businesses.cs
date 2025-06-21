@@ -468,7 +468,7 @@ namespace NeptuneEvo.Core
             1462895032,
             -541762431,
         };
-        public static List<string>[] CarsNames = new List<string>[4]
+        public static List<string>[] CarsNames = new List<string>[5]
         {
             new List<string>() // premium
             {
@@ -870,7 +870,52 @@ namespace NeptuneEvo.Core
                 "Deathbike3",
 
                 "Quad1",
-            } // moto
+            }, // moto
+            new List<string>() // elite
+            {
+                "Caddy",
+                "Romero",
+                "Hotknife",
+                "Ruston",
+                "Outlaw",
+                "Stafford",
+                "Shotaro",
+                "ZType",
+                "RRSVR",
+                "BmwM3",
+                "BmwM5",
+                "BmwM8",
+                "MBC63S",
+                "MBG63",
+                "AudiR8",
+                "BmwI8",
+                "DodgeViper",
+                "BentleyC",
+                "Camry",
+                "LX570",
+                "AudiRS7",
+                "NGTR",
+                "Lambo770",
+                "BMWE38",
+                "MBE420",
+                "BentleyB",
+                "MazdaRX7",
+                "Supra",
+                "SubaruWRX",
+                "BMWX6",
+                "MBC63",
+                "MLEvoX",
+                "AudiTT",
+                "Skyline",
+                "TeslaS",
+                "Regera",
+                "Lambo640",
+                "Ferrari488",
+                "lambo580",
+                "cadctsv",
+                "quad1",
+                "vapidse"
+            } // elite
         };
 
         public static List<Product> fillProductList(int type)
@@ -3044,21 +3089,25 @@ namespace NeptuneEvo.Core
                 cmd.Parameters.AddWithValue("@val10", taxes);
                 MySQL.Query(cmd);
 
-                Business biz = new Business(lastBizID, "Государство", govPrice, type, products_list, pos, new Vector3(), bankID, -1, new List<Order>(), taxes);
-                biz.UpdateLabel();
-                BizList.TryAdd(lastBizID, biz);
-
-                if (type == 6)
+                NAPI.Task.Run(() =>
                 {
-                    using MySqlCommand cmd1 = new MySqlCommand
+                    Business biz = new Business(lastBizID, "Государство", govPrice, type, products_list, pos, new Vector3(), bankID, -1, new List<Order>(), taxes);
+                    biz.UpdateLabel();
+                    BizList.TryAdd(lastBizID, biz);
+
+                    if (type == 6)
                     {
-                        CommandText = "INSERT INTO `weapons`(`id`,`lastserial`) VALUES(@val0,@val1)"
-                    };
-                    cmd1.Parameters.AddWithValue("@val0", biz.ID);
-                    cmd1.Parameters.AddWithValue("@val1", 0);
-                    MySQL.Query(cmd1);
-                }
-                Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, LangFunc.GetText(LangType.Ru, DataName.BizCreated), 3000);
+                        using MySqlCommand cmd1 = new MySqlCommand
+                        {
+                            CommandText = "INSERT INTO `weapons`(`id`,`lastserial`) VALUES(@val0,@val1)"
+                        };
+                        cmd1.Parameters.AddWithValue("@val0", biz.ID);
+                        cmd1.Parameters.AddWithValue("@val1", 0);
+                        MySQL.Query(cmd1);
+                    }
+
+                    Notify.Send(player, NotifyType.Info, NotifyPosition.BottomCenter, LangFunc.GetText(LangType.Ru, DataName.BizCreated, biz.ID), 3000);
+                });
             }
             catch (Exception e)
             {
