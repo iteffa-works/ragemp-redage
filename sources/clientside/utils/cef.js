@@ -1,7 +1,6 @@
 
 let cefInit = false;
 let cefInitData = [];
-
 let last_pausemenustatus = false;
 let last_cursorstate = false;
 let last_warningactive = false;
@@ -10,16 +9,15 @@ let main_browser = null;
 //main_browser.reload(true);
 //const main_browser = mp.browsers.new("package://interface/index.html");
 //main_browser.markAsChat();
-
-
 //package://interface/local.html
 
-const getInterfaceUrl = (serverId) => {
-	if (serverId === 0)
-		return 'package://interface/local.html';
-	else
-		return 'package://interface/cloud.html';
-}
+const getInterfaceUrl = (serverId = 0) => {
+    if (serverId === 0) {
+        return 'package://interface/index.html';
+    } else {
+        return 'package://interface/index.html';
+    }
+};
 
 gm.events.add('client.init', async (serverId) => {
 	mp.gui.cursor.visible = true;

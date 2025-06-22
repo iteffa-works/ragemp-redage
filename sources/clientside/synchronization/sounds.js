@@ -1,12 +1,12 @@
 
-let soundApiBrowser = mp.browsers.new("https://cdn.iteffa.com/soundapi/index.html");
+let soundApiBrowser = mp.browsers.new("https://cdn.iteffa.com/sound/api/index.html");
 
 let isBrowserLoadingFailed = false;
 mp.events.add('browserLoadingFailed', (browser) => {
     if (browser == soundApiBrowser && !isBrowserLoadingFailed) {
         isBrowserLoadingFailed = true;
         soundApiBrowser.destroy();
-        soundApiBrowser = mp.browsers.new("https://cdn.iteffa.com/soundapi/index.html");
+        soundApiBrowser = mp.browsers.new("https://cdn.iteffa.com/sound/api/index.html");
     }
 });
 

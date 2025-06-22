@@ -1,76 +1,65 @@
 
-const
-    clientName = "client.battlepass.",
-    rpcName = "rpc.battlepass.",
-    serverName = "server.battlepass.";
-
+const clientName = "client.battlepass.", rpcName = "rpc.battlepass.", serverName = "server.battlepass.";
 const battlepassData = {};
-
 const maxCountAwards = 6;
+
+// Данные для боевого пропуска
 battlepassData.awards = [];
 battlepassData.awardsPremium = [];
-
 battlepassData.lvl = 0;
 battlepassData.exp = 0;
 battlepassData.isPremium = false;
 
 //Те которые надо выполнить
-
 battlepassData.tasksDay = [];
 battlepassData.tasksWeek = [];
 
 //Награды которые забрал
-
 battlepassData.tookReward = [];
 battlepassData.tookRewardPremium = [];
 
-//
-
+// Время добавления опыта
 battlepassData.missionsTask = [];
 battlepassData.missionDataTasks = [];
 battlepassData.missionDataSelect = 0;
 
 gm.events.add(clientName + "open", () => {
-
-    global.binderFunctions.GameMenuClose ();
-
+    global.binderFunctions.GameMenuClose();
     let isInit = battlepassData.awards.length > 0;
-
     mp.events.callRemote(serverName + "open", isInit);
 });
 
 let isBattlePassOpen = false;
 gm.events.add(clientName + "show", async (lvl, exp, isPremium, tasksDay, tasksWeek, tookReward, tookRewardPremium, awards, awardsPremium, time, missionsTask, missionDataTasks, missionDataSelect) => {
-
-    await global.awaitMenuCheck ();
-
-    if (isBattlePassOpen)
-        return;
+    await global.awaitMenuCheck();
+    if (isBattlePassOpen) return;
 
     battlepassData.lvl = lvl;
     battlepassData.exp = exp;
     battlepassData.isPremium = isPremium;
+
+    // 
+    battlepassData.tasksDay = JSON.parse(tasksDay);
+    battlepassData.tasksWeek = JSON.parse(tasksWeek);
+
     //
-    battlepassData.tasksDay = JSON.parse (tasksDay);
-    battlepassData.tasksWeek = JSON.parse (tasksWeek);
-    //
-    battlepassData.tookReward = JSON.parse (tookReward);
-    battlepassData.tookRewardPremium = JSON.parse (tookRewardPremium);
+    battlepassData.tookReward = JSON.parse(tookReward);
+    battlepassData.tookRewardPremium = JSON.parse(tookRewardPremium);
 
     if (awards && typeof awards === "string")
-        battlepassData.awards = JSON.parse (awards);
+        battlepassData.awards = JSON.parse(awards);
 
     if (awardsPremium && typeof awardsPremium === "string")
-        battlepassData.awardsPremium = JSON.parse (awardsPremium);
+        battlepassData.awardsPremium = JSON.parse(awardsPremium);
 
     battlepassData.time = time;
 
     //
 
     if (missionsTask && typeof missionsTask === "string")
-        battlepassData.missionsTask = JSON.parse (missionsTask);
+        battlepassData.missionsTask = JSON.parse(missionsTask);
 
-    battlepassData.missionDataTasks = JSON.parse (missionDataTasks);
+    battlepassData.missionDataTasks = JSON.parse(missionDataTasks);
     battlepassData.missionDataSelect = missionDataSelect;
 
     //
@@ -87,7 +76,7 @@ gm.events.add(clientName + "close", () => {
 
     mp.gui.emmit(`window.router.setHud();`);
     global.menuClose();
-    
+
     isBattlePassOpen = false;
 });
 
@@ -109,11 +98,11 @@ const getAwards = (page) => {
             index: index,
             usual: {
                 taked: battlepassData.tookReward.includes(index),
-                ...awards [index]
+                ...awards[index]
             },
             premium: {
                 taked: battlepassData.tookRewardPremium.includes(index),
-                ...awardsPremium [index]
+                ...awardsPremium[index]
             },
         })
     }
@@ -122,7 +111,7 @@ const getAwards = (page) => {
 }
 
 rpc.register(rpcName + "getAwards", (page) => {
-    return JSON.stringify (getAwards (page));
+    return JSON.stringify(getAwards(page));
 });
 
 const isAllAwardsTaked = () => {
@@ -134,11 +123,11 @@ const isAllAwardsTaked = () => {
     for (let i = 0; i < awards.length; i++) {
 
         if (battlepassData.lvl > i) {
-            if (awards [i].Type >= 0 && !battlepassData.tookReward.includes(i)) {
+            if (awards[i].Type >= 0 && !battlepassData.tookReward.includes(i)) {
                 isAllTaked = true;
                 break;
             }
-            if (battlepassData.isPremium && awardsPremium [i].Type >= 0 && !battlepassData.tookRewardPremium.includes(i)) {
+            if (battlepassData.isPremium && awardsPremium[i].Type >= 0 && !battlepassData.tookRewardPremium.includes(i)) {
                 isAllTaked = true;
                 break;
             }
@@ -149,7 +138,7 @@ const isAllAwardsTaked = () => {
 }
 
 rpc.register(rpcName + "isAllAwardsTaked", () => {
-    return isAllAwardsTaked ();
+    return isAllAwardsTaked();
 });
 //
 
@@ -175,11 +164,11 @@ rpc.register(rpcName + "getPremium", () => {
 //
 
 rpc.register(rpcName + "getTasksDay", () => {
-    return JSON.stringify (battlepassData.tasksDay);
+    return JSON.stringify(battlepassData.tasksDay);
 });
 
 rpc.register(rpcName + "getTasksWeek", () => {
-    return JSON.stringify (battlepassData.tasksWeek);
+    return JSON.stringify(battlepassData.tasksWeek);
 });
 
 //
@@ -193,8 +182,8 @@ gm.events.add(clientName + "take", (index, isPrem) => {//+
 });
 
 gm.events.add(clientName + "takeSuccess", (tookReward, tookRewardPremium) => {//+
-    battlepassData.tookReward = JSON.parse (tookReward);
-    battlepassData.tookRewardPremium = JSON.parse (tookRewardPremium);
+    battlepassData.tookReward = JSON.parse(tookReward);
+    battlepassData.tookRewardPremium = JSON.parse(tookRewardPremium);
 
     //
 
@@ -254,7 +243,7 @@ const getMissions = (page) => {
     let missionDataTasks = {};
 
     battlepassData.missionDataTasks.forEach((data) => {
-        missionDataTasks [data.Index] = data;
+        missionDataTasks[data.Index] = data;
     });
 
     const missions = Array.from(battlepassData.missionsTask);
@@ -263,9 +252,9 @@ const getMissions = (page) => {
 
     for (let i = 0; i < maxCountMissions; i++) {
         const index = (maxCountMissions * page) + i;
-        const data = missions [index];
+        const data = missions[index];
         if (typeof data === "object") {
-            const missionData = missionDataTasks [data.id];
+            const missionData = missionDataTasks[data.id];
             let status = statusData.closed;
 
             if (battlepassData.missionDataSelect === data.id)
@@ -289,7 +278,7 @@ const getMissions = (page) => {
 
 
 rpc.register(rpcName + "getMissions", (page) => {
-    return JSON.stringify (getMissions (page));
+    return JSON.stringify(getMissions(page));
 });
 
 gm.events.add(clientName + "setMissions", (id) => {
@@ -298,20 +287,20 @@ gm.events.add(clientName + "setMissions", (id) => {
 
 gm.events.add(clientName + "updateMissions", (id, missionDataTasks, missionsTask) => {
     battlepassData.missionDataSelect = id;
-    battlepassData.missionDataTasks = JSON.parse (missionDataTasks);
+    battlepassData.missionDataTasks = JSON.parse(missionDataTasks);
 
     if (missionsTask && typeof missionsTask === "string")
-        battlepassData.missionsTask = JSON.parse (missionsTask);
+        battlepassData.missionsTask = JSON.parse(missionsTask);
 
     //
     mp.gui.emmit(`window.listernEvent ('updateMissions');`);
 });
 
-const missionImage = "https://cdn.iteffa.com/cloud/inventoryItems/items/bp.png";
+const missionImage = "https://cdn.iteffa.com/images/inventory/items/bp.png";
 
 gm.events.add(clientName + "missionComplite", (title, desc) => {
     mp.gui.emmit(`window.missionComplite ('${title}', '${desc}', '${translateText("Молодец, ты справился!")}', '${missionImage}');`);
-    mp.events.call("sounds.playInterface", "cloud/sound/missionComplite.ogg", 0.005);
+    mp.events.call("sounds.playInterface", "sound/missionComplite.ogg", 0.005);
 });
 
 gm.events.add(clientName + "skip", () => {
