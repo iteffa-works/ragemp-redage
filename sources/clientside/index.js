@@ -1,7 +1,7 @@
 /*mp.events._callRemote = mp.events.callRemote;
 
 mp.events.callRemote = (eventName, ...handler) => {
-    mp.events._callRemote(eventName, ...handler);
+	mp.events._callRemote(eventName, ...handler);
 	mp.events._callRemote("event_stats", eventName);
 };
 */
@@ -34,138 +34,113 @@ global.RAYCASTING_FLAGS = { map: 1, vehicles: 2, players: 4, players2: 8, object
 
 global.Natives = {};
 
-Natives.ADD_TEXT_ENTRY = (entryKey, entryText) => mp.game.invoke('0x32CA01C3', entryKey, entryText); 
+// Обычные нативные функции (invoke)
+const nativeInvoke = {
+	ADD_TEXT_ENTRY: '0x32CA01C3',
+	RELEASE_SCRIPT_GUID_FROM_ENTITY: '0x2B3334BCA57CD799',
+	ADD_BLIP_FOR_ENTITY: '0x5CDE92C702A8FCE7',
+	REMOVE_BLIP: '0x86A652570E5F25DD',
+	SET_BLIP_CATEGORY: '0x234CDD44D996FD9A',
+	SHOW_HEADING_INDICATOR_ON_BLIP: '0x5FBCA48327B914DF',
+	SET_BLIP_COLOUR: '0x03D7FB09E75D6B7E',
+	SET_BLIP_AS_FRIENDLY: '0x6F6F290102C02AB4',
+	SET_BLIP_SPRITE: '0xDF735600A4696DAF',
+	SET_THIS_SCRIPT_CAN_REMOVE_BLIPS_CREATED_BY_ANY_SCRIPT: '0xB98236CAAECEF897',
+	GET_NUMBER_OF_ACTIVE_BLIPS: '0x9A3FF3DE163034E8',
+	IS_WAYPOINT_ACTIVE: '0x1DD1F58F493F1DA5',
+	_DELETE_WAYPOINT: '0xD8E694757BCEA8E9',
+	GET_WAYPOINT_BLIP_ENUM_ID: '0x186E5D252FA50E7D',
+	GET_FIRST_BLIP_INFO_ID: '0x1BEDE233E6CD2A1F',
+	GET_NEXT_BLIP_INFO_ID: '0x14F96AA50D6FBEA7',
+	DOES_BLIP_EXIST: '0xA6DB27D19ECBB7DA',
+	GET_BLIP_INFO_ID_TYPE: '0xBE9B0959FFD0779B',
+	GET_BLIP_SPRITE: '0x1FC877464A04FC4F',
+	ANIMPOSTFX_STOP_ALL: '0xB4EDDC19532BFB85',
+	GET_SOUND_ID: '0x430386FE9BF80B45',
+	DOES_ENTITY_EXIST: '0x7239B21A38F536BA',
+	SET_ENTITY_LOD_DIST: '0x5927F96A78577363',
+	ACTIVATE_PHYSICS: '0x710311ADF0E20730',
+	SET_DAMPING: '0xEEA3B200A6FEB65B',
+	SET_ENTITY_VELOCITY: '0x1C99BB7B6E96D16F',
+	SET_ENTITY_INVINCIBLE: '0x3882114BDE571AD4',
+	SET_ENTITY_PROOFS: '0xFAEE099C6F890BB8',
+	ATTACH_ENTITY_TO_ENTITY: '0x6B9BBD38AB0796DF',
+	FREEZE_ENTITY_POSITION: '0x428CA6DBD1094446',
+	GET_CLOCK_HOURS: '0x25223CA6B4D20B7F',
+	GET_INTERIOR_FROM_ENTITY: '0x2107BA504071A6BB',
+	SET_TV_CHANNEL_PLAYLIST: '0xF7B38B8305F1FE8B',
+	SET_SCRIPT_GFX_DRAW_ORDER: '0x61BB1D9B3A95D802',
+	SET_SCRIPT_GFX_DRAW_BEHIND_PAUSEMENU: '0xC6372ECD45D73BCD',
+	_DRAW_INTERACTIVE_SPRITE: '0x2BC54A8188768488',
+	REMOVE_PARTICLE_FX_FROM_ENTITY: '0xB8FEAEEBCC127425',
+	IS_RADAR_HIDDEN: '0x157F93B036700462',
+	HIDE_HUD_AND_RADAR_THIS_FRAME: '0x719FF505F097FD20',
+	HIDE_MINIMAP_EXTERIOR_MAP_THIS_FRAME: '0x5FBAE526203990C9',
+	_PLAY_AMBIENT_SPEECH1: '0x8E04FEDD28D42462',
+	SET_TIMECYCLE_MODIFIER: '0x2C933ABF17A1DF41',
+	SET_TIMECYCLE_MODIFIER_STRENGTH: '0x82E7FFCD5B2326B3',
+	CLEAR_TIMECYCLE_MODIFIER: '0x0F07E7745A236711',
+	IS_VEHICLE_ATTACHED_TO_TRAILER: '0xE7CF3C4F9F489F0C',
+	IS_ENTITY_ATTACHED_TO_ANY_VEHICLE: '0x26AA915AD89BFB4B',
+	GET_VEHICLE_TRAILER_VEHICLE: '0x1CDD6BADC297830D',
+	DETACH_VEHICLE_FROM_TRAILER: '0x90532EDF0D2BDD86',
+	ATTACH_VEHICLE_TO_TRAILER: '0x3C7D42D58F770B54',
+	GET_FRAME_COUNT: '0xFC8202EFC642E6F2',
+	GET_GAME_TIMER: '0x9CD27B0045628463',
+	SET_TRAIN_SPEED: '0xAA0BC91BE0B796E3',
+	SET_TRAIN_CRUISE_SPEED: '0x16469284DB8C62B5',
+	DELETE_ALL_TRAINS: '0x736A718577F39C7D',
+	SET_MISSION_TRAIN_COORDS: '0x591CA673AA6AB736',
+	SWITCH_TRAIN_TRACK: '0xFD813BB7DB977F20',
+	SET_ENTITY_AS_MISSION_ENTITY: '0xAD738C3085FE7E11',
+	SET_ENTITY_QUATERNION: '0x77B21BE7AC540F07',
+	GET_PED_STEALTH_MOVEMENT: '0x7C2AC9CA66575FBF',
+	DELETE_ENTITY: '0xAE3CBE5BF394C9C9',
+	SET_ENTITY_COORDS_NO_OFFSET: '0x239A3351AC1DA385',
+	DELETE_OBJECT: '0x539E0AE3E6634B9F',
+	SET_PED_NEVER_LEAVES_GROUP: '0x3DBFC55D5C9BB447',
+	SET_PED_AS_GROUP_MEMBER: '0x9F3480FE65DB31B5',
+	GET_PLAYER_GROUP: '0x0D127585F77030AF',
+	_GET_NUM_HAIR_COLORS: '0xE5C0CF872C2AD150',
+	IS_ENTITY_AN_OBJECT: '0x8D68C8FD0FACA94E',
+	GET_ENTITY_MODEL: '0x9F47B058362C84B5',
+	ReplaceHudColourWithRgba: '0xF314CF4F0211894E'
+};
 
+// Генерация методов Natives, которые вызывают mp.game.invoke
+for (const [name, hash] of Object.entries(nativeInvoke)) {
+	Natives[name] = (...args) => mp.game.invoke(hash, ...args);
+}
 
-Natives.RELEASE_SCRIPT_GUID_FROM_ENTITY = (entity) => mp.game.invoke('0x2B3334BCA57CD799', entity);
-Natives.ADD_BLIP_FOR_ENTITY = (entity) => mp.game.invoke('0x5CDE92C702A8FCE7', entity);
-Natives.REMOVE_BLIP = (blip) => mp.game.invoke('0x86A652570E5F25DD', blip);
-Natives.SET_BLIP_CATEGORY = (blip, index) => mp.game.invoke('0x234CDD44D996FD9A', blip, index);
-Natives.SHOW_HEADING_INDICATOR_ON_BLIP = (blip, toggle) => mp.game.invoke('0x5FBCA48327B914DF', blip, toggle);
-Natives.SET_BLIP_COLOUR = (blip, color) => mp.game.invoke('0x03D7FB09E75D6B7E', blip, color);
+// Нативные функции, возвращающие Vector3 (invokeVector3)
+const nativeVector3 = {
+    GET_ENTITY_COORDS: '0x3FEF770D40960D5A',
+    GET_ENTITY_ROTATION: '0xAFBD61CC738D9EB9',
+    GET_OFFSET_FROM_ENTITY_GIVEN_WORLD_COORDS: '0x2274BC1C4885E333',
+    GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS: '0x1899F328B0E12848'
+}
 
-Natives.SET_BLIP_AS_FRIENDLY = (blip, toggle) => mp.game.invoke('0x6F6F290102C02AB4', blip, toggle);
-Natives.SET_BLIP_SPRITE = (blip, spriteId) => mp.game.invoke('0xDF735600A4696DAF', blip, spriteId);
+// Генерация методов Natives, которые вызывают mp.game.invokeVector3
+for (const [name, hash] of Object.entries(nativeVector3)) {
+    Natives[name] = (...args) => mp.game.invokeVector3(hash, ...args);
+}
 
-Natives.SET_THIS_SCRIPT_CAN_REMOVE_BLIPS_CREATED_BY_ANY_SCRIPT = (toggle) => mp.game.invoke('0xB98236CAAECEF897', toggle); 
-Natives.GET_NUMBER_OF_ACTIVE_BLIPS = () => mp.game.invoke('0x9A3FF3DE163034E8'); 
-Natives.IS_WAYPOINT_ACTIVE = () => mp.game.invoke('0x1DD1F58F493F1DA5');
-Natives._DELETE_WAYPOINT = () => mp.game.invoke('0xD8E694757BCEA8E9');
-Natives.GET_WAYPOINT_BLIP_ENUM_ID = () => mp.game.invoke('0x186E5D252FA50E7D');
-Natives.GET_FIRST_BLIP_INFO_ID = (blipSprite) => mp.game.invoke('0x1BEDE233E6CD2A1F', blipSprite);
-Natives.GET_NEXT_BLIP_INFO_ID = (blipSprite) => mp.game.invoke('0x14F96AA50D6FBEA7', blipSprite);
-Natives.DOES_BLIP_EXIST = (blip) => mp.game.invoke('0xA6DB27D19ECBB7DA', blip);
-Natives.GET_BLIP_INFO_ID_TYPE = (blip) => mp.game.invoke('0xBE9B0959FFD0779B', blip); 
-Natives.GET_BLIP_SPRITE = (blip) => mp.game.invoke('0x1FC877464A04FC4F', blip); 
-Natives.ANIMPOSTFX_STOP_ALL = () => mp.game.invoke('0xB4EDDC19532BFB85'); 
-Natives.GET_SOUND_ID = () => mp.game.invoke('0x430386FE9BF80B45'); 
+// Нативные функции, возвращающие строку (invokeString)
+const nativeString = {
+    GET_VEHICLE_NUMBER_PLATE_TEXT: '0x7CE1CCB9B293020E',
+    GET_MOD_TEXT_LABEL: '0x8935624F8C5592CC'
+};
 
+// Генерация методов Natives, которые вызывают mp.game.invokeString
+for (const [name, hash] of Object.entries(nativeString)) {
+    Natives[name] = (...args) => mp.game.invokeString(hash, ...args);
+}
 
-Natives.DOES_ENTITY_EXIST = (entity) => mp.game.invoke('0x7239B21A38F536BA', entity);
-Natives.SET_ENTITY_LOD_DIST = (entity, value) => mp.game.invoke('0x5927F96A78577363', entity, value); 
-Natives.ACTIVATE_PHYSICS = (entity) => mp.game.invoke('0x710311ADF0E20730', entity);
-Natives.SET_DAMPING = (entity, vertex, value) => mp.game.invoke('0xEEA3B200A6FEB65B', entity, vertex, value);
-Natives.SET_ENTITY_VELOCITY = (entity, x, y, z) => mp.game.invoke('0x1C99BB7B6E96D16F', entity, x, y, z);
-Natives.SET_ENTITY_INVINCIBLE = (entity, toggle) => mp.game.invoke('0x3882114BDE571AD4', entity, toggle);
-
-Natives.SET_ENTITY_PROOFS = (entity, bulletProof, fireProof, explosionProof, collisionProof, meleeProof, steamProof, p7, drownProof) => mp.game.invoke('0xFAEE099C6F890BB8', entity, bulletProof, fireProof, explosionProof, collisionProof, meleeProof, steamProof, p7, drownProof);
-
-Natives.ATTACH_ENTITY_TO_ENTITY = (entity1, entity2, boneIndex, xPos, yPos, zPos, xRot, yRot, zRot, p9, useSoftPinning, collision, isPed, vertexIndex, fixedRot) => mp.game.invoke('0x6B9BBD38AB0796DF', entity1, entity2, boneIndex, xPos, yPos, zPos, xRot, yRot, zRot, p9, useSoftPinning, collision, isPed, vertexIndex, fixedRot);
-Natives.FREEZE_ENTITY_POSITION = (entity, toggle) => mp.game.invoke('0x428CA6DBD1094446', entity, toggle);
-
-Natives.GET_CLOCK_HOURS = () => mp.game.invoke('0x25223CA6B4D20B7F');
-
-
-Natives.GET_INTERIOR_FROM_ENTITY = (entity) => mp.game.invoke('0x2107BA504071A6BB', entity);
-Natives.SET_TV_CHANNEL_PLAYLIST = (tvChannel, playlistName, restart) => mp.game.invoke('0xF7B38B8305F1FE8B', tvChannel, playlistName, restart);
-Natives.SET_SCRIPT_GFX_DRAW_ORDER = (order) => mp.game.invoke('0x61BB1D9B3A95D802', order);
-
-Natives.SET_SCRIPT_GFX_DRAW_BEHIND_PAUSEMENU = (flag) => mp.game.invoke('0xC6372ECD45D73BCD', flag);
-Natives._DRAW_INTERACTIVE_SPRITE = (textureDict, textureName, screenX, screenY, width, height, heading, red, green, blue, alpha) => mp.game.invoke('0x2BC54A8188768488', textureDict, textureName, screenX, screenY, width, height, heading, red, green, blue, alpha);
-
-
-Natives.REMOVE_PARTICLE_FX_FROM_ENTITY = (entity) => mp.game.invoke('0xB8FEAEEBCC127425', entity);
-
-Natives.IS_RADAR_HIDDEN = () => mp.game.invoke('0x157F93B036700462');
-Natives.HIDE_HUD_AND_RADAR_THIS_FRAME = () => mp.game.invoke('0x719FF505F097FD20');
-Natives.HIDE_MINIMAP_EXTERIOR_MAP_THIS_FRAME = () => mp.game.invoke('0x5FBAE526203990C9');
-
-Natives._PLAY_AMBIENT_SPEECH1 = (ped, speechName, speechParam) => mp.game.invoke('0x8E04FEDD28D42462', ped, speechName, speechParam);
-
-
-Natives.SET_TIMECYCLE_MODIFIER = (modifierName) => mp.game.invoke('0x2C933ABF17A1DF41', modifierName);
-Natives.SET_TIMECYCLE_MODIFIER_STRENGTH = (strength) => mp.game.invoke('0x82E7FFCD5B2326B3', strength);
-Natives.CLEAR_TIMECYCLE_MODIFIER = () => mp.game.invoke('0x0F07E7745A236711');
-
-
-Natives.IS_VEHICLE_ATTACHED_TO_TRAILER = (vehicle) => mp.game.invoke('0xE7CF3C4F9F489F0C', vehicle);
-Natives.IS_ENTITY_ATTACHED_TO_ANY_VEHICLE = (vehicle) => mp.game.invoke('0x26AA915AD89BFB4B', vehicle);
-Natives.GET_VEHICLE_TRAILER_VEHICLE = (vehicle, trailer) => mp.game.invoke('0x1CDD6BADC297830D', vehicle, trailer);
-Natives.DETACH_VEHICLE_FROM_TRAILER = (vehicle) => mp.game.invoke('0x90532EDF0D2BDD86', vehicle);
-Natives.ATTACH_VEHICLE_TO_TRAILER = (vehicle, trailer, radius) => mp.game.invoke('0x3C7D42D58F770B54', vehicle, trailer, radius);
-
-Natives.GET_FRAME_COUNT = () => mp.game.invoke('0xFC8202EFC642E6F2');
-Natives.GET_GAME_TIMER = () => mp.game.invoke('0x9CD27B0045628463');
-
-Natives.SET_TRAIN_SPEED = (train, speed) => mp.game.invoke('0xAA0BC91BE0B796E3', train, speed);
-Natives.SET_TRAIN_CRUISE_SPEED = (train, speed) => mp.game.invoke('0x16469284DB8C62B5', train, speed);
-Natives.DELETE_ALL_TRAINS = () => mp.game.invoke('0x736A718577F39C7D');
-
-Natives.SET_MISSION_TRAIN_COORDS = (train, x, y, z) => mp.game.invoke('0x591CA673AA6AB736', train, x, y, z);
-Natives.SWITCH_TRAIN_TRACK = (trackId, state) => mp.game.invoke('0xFD813BB7DB977F20', trackId, state);
-Natives.SET_ENTITY_AS_MISSION_ENTITY = (entity, p1, p2) => mp.game.invoke('0xAD738C3085FE7E11', entity, p1, p2);
-Natives.SET_ENTITY_QUATERNION = (entity, x, y, z, w) => mp.game.invoke('0x77B21BE7AC540F07', entity, x, y, z, w);
-
-Natives.GET_PED_STEALTH_MOVEMENT = (ped) => mp.game.invoke('0x7C2AC9CA66575FBF', ped);
-
-
-Natives.GET_ENTITY_COORDS = (entity, alive) => mp.game.invokeVector3('0x3FEF770D40960D5A', entity, alive);
-Natives.FREEZE_ENTITY_POSITION = (entity, toggle) => mp.game.invoke('0x428CA6DBD1094446', entity, toggle);
-Natives.DELETE_ENTITY = (entity) => mp.game.invoke('0xAE3CBE5BF394C9C9', entity);
-
-Natives.SET_ENTITY_COORDS_NO_OFFSET = (entity, xPos, yPos, zPos, alive, deadFlag, ragdollFlag) => mp.game.invoke('0x239A3351AC1DA385', entity, xPos, yPos, zPos, alive, deadFlag, ragdollFlag);
-
-
-Natives.DELETE_OBJECT = (object) => mp.game.invoke('0x539E0AE3E6634B9F', object);
-
-Natives.DELETE_ENTITY = (entity) => mp.game.invoke('0xAE3CBE5BF394C9C9', entity);
-
-//
-Natives.SET_PED_NEVER_LEAVES_GROUP = (ped, toggle) => mp.game.invoke('0x3DBFC55D5C9BB447', ped, toggle);
-Natives.SET_PED_AS_GROUP_MEMBER = (ped, groupId) => mp.game.invoke('0x9F3480FE65DB31B5', ped, groupId);
-Natives.GET_PLAYER_GROUP = (player) => mp.game.invoke('0x0D127585F77030AF', player);
-//Natives.DELETE_ENTITY = (entity) => mp.game.invoke('0xAE3CBE5BF394C9C9', entity);
-
-
-
-Natives._GET_NUM_HAIR_COLORS = () => mp.game.invoke('0xE5C0CF872C2AD150');
+// Нативные функции, возвращающие число (invokeNumber)
 Natives._GET_PED_HAIR_RGB_COLOR = (hairColorIndex, outR, outG, outB) => mp.game.invoke('0x4852FC386E2E1BB5', hairColorIndex, outR, outG, outB);
 Natives._GET_NUM_MAKEUP_COLORS = () => mp.game.invoke('0xD1F7CA1535D22818');
 Natives._GET_PED_MAKEUP_RGB_COLOR = (makeupColorIndex, outR, outG, outB) => mp.game.invoke('0x013E5CFC38CD5387', makeupColorIndex, outR, outG, outB);
-
-
 Natives.TASK_GO_TO_ENTITY = (entity, target, duration, distance, speed, p5, p6) => mp.game.invoke('0x6A071245EB0D1882', entity, target, duration, distance, speed, p5, p6);
-
-
-
-Natives.GET_VEHICLE_NUMBER_PLATE_TEXT = (vehicle) => mp.game.invokeString('0x7CE1CCB9B293020E', vehicle);
-
-Natives.GET_MOD_TEXT_LABEL = (vehicle, modType, modValue) => mp.game.invokeString('0x8935624F8C5592CC', vehicle, modType, modValue);
-
-
-
-
-
-Natives.IS_ENTITY_AN_OBJECT = (entity) => mp.game.invoke('0x8D68C8FD0FACA94E', entity);
-Natives.GET_ENTITY_MODEL = (entity) => mp.game.invoke('0x9F47B058362C84B5', entity);
-Natives.GET_ENTITY_ROTATION = (entity, rotationOrder) => mp.game.invokeVector3('0xAFBD61CC738D9EB9', entity, rotationOrder);
-Natives.GET_OFFSET_FROM_ENTITY_GIVEN_WORLD_COORDS = (entity, posX, posY, posZ) => mp.game.invokeVector3('0x2274BC1C4885E333', entity, posX, posY, posZ);
-Natives.GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS = (entity, offsetX, offsetY, offsetZ) => mp.game.invokeVector3('0x1899F328B0E12848', entity, offsetX, offsetY, offsetZ);
-
-
-Natives.ReplaceHudColourWithRgba = (hudColorIndex, r, g, b, a) => mp.game.invoke('0xF314CF4F0211894E', hudColorIndex, r, g, b, a);
-
-
 
 global.renderName = {
 	"render": "cRender",
@@ -185,7 +160,6 @@ global.renderName = {
 	"time": "t.time",
 	"sound": "t.sound",
 	"soundRot": "t.soundRot",
-
 }
 
 /*
@@ -373,9 +347,7 @@ require('./player/boombox.js');
 require('./player/wedding.js');
 require('./player/damage/index.js');
 require('./player/chatHeadOverlay.js')
-
 require('./business/businessmanage.js');
-
 require('./vehicle/race_system.js');
 require('./vehicle/autoshop.js');
 require('./vehicle/control.js');
@@ -387,19 +359,15 @@ require('./vehicle/drone.js');
 require('./vehicle/flatbed.js');
 require('./vehicle/ticket.js');
 require('./vehicle/mileage.js');
-
-
 require('./fractions/advert.js')
 require('./fractions/policecomputer.js')
 require('./fractions/stock.js');
 require('./fractions/policepc.js');
 require('./fractions/mats.js');
 require('./fractions/menu.js');
-
 require('./house/furniture.js');
 require('./house/index.js');
 require('./house/rieltagency.js');
-
 require('./world/anim.js');
 require('./world/doors.js');
 require('./world/environment.js');
@@ -412,21 +380,15 @@ require('./world/stream.js');
 //require('./world/metro/index.js');
 require('./world/petSystem.js');
 require('./world/livingcity.js');
-
 require('./main.js');
-
 require('./casino');
-
 require('./synchronization/index.js');
 require('./shop/weapon/weaponComponents.js');
 require('./shop/clothes/clothesEditor.js');//+++
 require('./shop/custom/index.js');
-
-
 require('./synchronization/state.js');
 require('./synchronization/particleFx.js');
 require('./synchronization/sit.js');
-
 require('./shop/newshop/index.js');
 require('./events/eventsMenu.js');
 require('./events/airdrop.js');
@@ -437,49 +399,36 @@ require('./events/award.js');
 require('./events/mafia_game.js');
 require('./events/tankRoyale.js');
 require('./events/matwar.js');
-
-
 require('./polygons/index.js');
 require('./phone/index.js');
 require('./battlepass/battlepass.js');
-
 require('./table/index');
-
 require('./shamancode/snake.js');
 //require('./shamancode/suicide.js');
 //npmrequire('./shamancode/compass.js');
 //require('./shamancode/helicam.js');
-
-
-
 require('./pritonCode/trafficWithoutSync/index.js');
 
-gm.events.add('setFriendList', function (clear, friendlist) 
-{
-	try
-	{
-		if(clear) {
+gm.events.add('setFriendList', function (clear, friendlist) {
+	try {
+		if (clear) {
 			global.friends = [];
 		}
-		
+
 		for (let key in friendlist) {
 			global.friends[key] = friendlist[key];
 		}
 	}
-	catch (e) 
-	{
+	catch (e) {
 		mp.events.callRemote("client_trycatch", "index", "setFriendList", e.toString());
 	}
 })
 
-gm.events.add('setFriend', function (friend, fullname) 
-{
-	try
-	{
+gm.events.add('setFriend', function (friend, fullname) {
+	try {
 		global.friends[friend] = fullname;
 	}
-	catch (e) 
-	{
+	catch (e) {
 		mp.events.callRemote("client_trycatch", "index", "setFriend", e.toString());
 	}
 })
@@ -491,14 +440,12 @@ global.sptarget = null;
 
 var petathouse = null;
 gm.events.add('petinhouse', (petName, petX, petY, petZ, petC, Dimension) => {
-	try
-	{
-		if(petathouse != null) {
+	try {
+		if (petathouse != null) {
 			petathouse.destroy();
 			petathouse = null;
 		}
-		switch(petName) 
-		{
+		switch (petName) {
 			case "Husky":
 				petName = 1318032802;
 				break;
@@ -529,8 +476,7 @@ gm.events.add('petinhouse', (petName, petX, petY, petZ, petC, Dimension) => {
 		}
 		petathouse = mp.peds.new(petName, new mp.Vector3(petX, petY, petZ), petC, Dimension);
 	}
-	catch (e) 
-	{
+	catch (e) {
 		mp.events.callRemote("client_trycatch", "index", "petinhouse", e.toString());
 	}
 });
@@ -578,7 +524,7 @@ const entityMap = {
 	'`': '&#x60;',
 	'=': '&#x3D;'
 };
-  
+
 global.escapeHtml = (str) => {
 	return String(str).replace(/[&<>"'`=\/]/g, function (s) {
 		return entityMap[s];
@@ -586,44 +532,42 @@ global.escapeHtml = (str) => {
 }
 
 global.loadModel = (requiredModel) => new Promise(async (resolve, reject) => {
-    try {
-        if (typeof requiredModel === "string")
-            requiredModel = mp.game.joaat(requiredModel);
-        if (mp.game.streaming.hasModelLoaded(requiredModel))
-            return resolve(true);
-        mp.game.streaming.requestModel(requiredModel);
-        let d = 0;
-        while (!mp.game.streaming.hasModelLoaded(requiredModel)) {
-            if (d > 5000) return resolve(false);
-            d++;
-            await global.wait (0);
-        }
-        return resolve(true);
-    } 
-    catch (e) 
-    {
-        mp.events.callRemote("client_trycatch", "events/airdrop", "loadModel", e.toString());
-        resolve(false);
-    }
+	try {
+		if (typeof requiredModel === "string")
+			requiredModel = mp.game.joaat(requiredModel);
+		if (mp.game.streaming.hasModelLoaded(requiredModel))
+			return resolve(true);
+		mp.game.streaming.requestModel(requiredModel);
+		let d = 0;
+		while (!mp.game.streaming.hasModelLoaded(requiredModel)) {
+			if (d > 5000) return resolve(false);
+			d++;
+			await global.wait(0);
+		}
+		return resolve(true);
+	}
+	catch (e) {
+		mp.events.callRemote("client_trycatch", "events/airdrop", "loadModel", e.toString());
+		resolve(false);
+	}
 });
 
 global.isAttached = (entity) => new Promise(async (resolve, reject) => {
-    try {
-        if (entity && entity.handle !== 0 && !!entity.isAttached())
-            return resolve(true);
-        let d = 0;
-        while (!entity || !entity.handle !== 0 || !!!entity.isAttached()) {
-            if (d > 500) return resolve(false);
-            d++;
-            await global.wait (10);
-        }
-        return resolve(true);
-    } 
-    catch (e) 
-    {
-        mp.events.callRemote("client_trycatch", "events/airdrop", "isAttached", e.toString());
-        resolve(false);
-    }
+	try {
+		if (entity && entity.handle !== 0 && !!entity.isAttached())
+			return resolve(true);
+		let d = 0;
+		while (!entity || !entity.handle !== 0 || !!!entity.isAttached()) {
+			if (d > 500) return resolve(false);
+			d++;
+			await global.wait(10);
+		}
+		return resolve(true);
+	}
+	catch (e) {
+		mp.events.callRemote("client_trycatch", "events/airdrop", "isAttached", e.toString());
+		resolve(false);
+	}
 });
 
 gm.events.add("setTraffic", (index) => {
@@ -638,11 +582,11 @@ gm.events.add("cleartraffic", () => {
 
 let getInsert = 0;
 mp.keys.bind(global.Keys.VK_INSERT, true, function () { // F8
-    if (new Date().getTime() - getInsert < (1000 * 30)) return;
-	
+	if (new Date().getTime() - getInsert < (1000 * 30)) return;
+
 	let checker = true;
 	global.userBinder.forEach((item) => {
-		if (parseInt (global.Keys.VK_INSERT) === parseInt (item.keyCode)) {
+		if (parseInt(global.Keys.VK_INSERT) === parseInt(item.keyCode)) {
 			checker = false;
 			return;
 		}
@@ -683,7 +627,7 @@ rpc.register("rpc.getPosition", () => {
 
 gm.events.add("hud.info", (title, desc, header, image) => {
 	mp.gui.emmit(`window.missionComplite ('${title}', '${desc}', '${header}', '${image}');`);
-	mp.events.call("sounds.playInterface", "cloud/sound/missionComplite.ogg", 0.005);
+	mp.events.call("sounds.playInterface", "sound/missionComplite.ogg", 0.005);
 });
 
 gm.events.add("check.stream", () => {
@@ -729,7 +673,7 @@ mp.events.add("clothes.getOffsets", () => {
 });
 
 function getOffsets() {
-    let data = {
+	let data = {
 		male: {},
 		female: {}
 	}
@@ -782,7 +726,7 @@ function getOffsets() {
 	for (let key in data.female) {
 		mp.console.logInfo(`{ ClothesCategory.ClothesType.${key} , ${data.female[key]},`, true)
 
-	}    
+	}
 }
 
 const clothesTypes = {
