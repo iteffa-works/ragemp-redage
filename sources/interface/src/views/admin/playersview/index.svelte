@@ -31,7 +31,7 @@
 <div class="plist">
     <div class="head">
         <img src={SmallLogo} alt="SmallLogo"/>
-        <h1>RedAge.net</h1>
+        <h1>Name Server</h1>
         <span>Players: {items.length}</span>
     </div>
     <div class="list">

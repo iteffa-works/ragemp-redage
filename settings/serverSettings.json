@@ -1,5 +1,5 @@
 ﻿{
-  "ServerName": "iTeffa Works RP | Battle Pass | I love Ukraine",
+  "ServerName": "iTeffa Works RP",
   "ServerId": 0,
   "MoneyMultiplier": 1,
   "ExpMultiplier": 1,
@@ -13,7 +13,7 @@
   "IsHouseBlips": false,
   "NumberWinners": 3,
   "MaxGameSlots": 1350,
-  "SiteUrl": "https://redage.net/",
+  "SiteUrl": "https://ragemp.iteffa.com/",
   "GoogleTrackingId": "",
   "GoogleCategory": "",
   "ClientInterfaceUrl": "",

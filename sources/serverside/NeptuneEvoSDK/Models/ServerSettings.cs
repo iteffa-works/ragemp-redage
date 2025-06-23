@@ -7,7 +7,7 @@ namespace Redage.SDK.Models
         /// <summary>
         /// Название сервера
         /// </summary>
-        public string ServerName = "iTeffa Works RP | Battle Pass | I love Ukraine";
+        public string ServerName = "iTeffa Works RP";
         /// <summary>
         /// Номер сервера - 0 - тестовый
         /// </summary>
