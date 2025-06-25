@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="uk">
+
+<head>
+	<meta charset='utf8'>
+	<meta name='viewport' content='width=device-width'>
+	<title>
+		<%= htmlWebpackPlugin.options.title %>
+	</title>
+	<script>
+		if (window.mp === undefined)
+			window.mp = {
+				trigger: () => {
+					console.warn('mp.trigger is not defined. Please ensure you are using the correct version of the MultiPlayer framework.');
+				}
+			}
+	</script>
+	<link rel="stylesheet" type="text/css" href="./build/bundle.css">
+</head>
+
+<body>
+	<script>document.cloud = "https://cdn.iteffa.com/cloud/"</script>
+	<% htmlWebpackPlugin.files.js.forEach(function(file){ %>
+		<script type="application/javascript" src="./<%= file.replace(/^auto\//, '') %>"></script>
+	<% }) %>
+</body>
+
+</html>
