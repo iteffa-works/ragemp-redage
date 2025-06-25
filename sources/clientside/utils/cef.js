@@ -13,9 +13,9 @@ let main_browser = null;
 
 const getInterfaceUrl = (serverId = 0) => {
     if (serverId === 0) {
-        return 'package://interface/index.html';
+        return 'package://cefui/index.html';
     } else {
-        return 'http://cdn.iteffa.com/cefui/'; 
+        return 'http://cdn.iteffa.com/cefui/';
     }
 };
 
