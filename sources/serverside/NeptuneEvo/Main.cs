@@ -1,56 +1,57 @@
-using GTANetworkAPI;
-using NeptuneEvo.Handles;
-using Redage.SDK;
 using Database;
+using GTANetworkAPI;
 using LinqToDB;
 using LinqToDB.Configuration;
 using LinqToDB.Data;
+using Localization;
 using MySqlConnector;
-using Newtonsoft.Json;
+using NeptuneEvo.Accounts;
+using NeptuneEvo.Accounts.Models;
+using NeptuneEvo.Character;
+using NeptuneEvo.Character.Models;
 using NeptuneEvo.Chars;
 using NeptuneEvo.Chars.Models;
 using NeptuneEvo.Core;
 using NeptuneEvo.Database;
-using NeptuneEvo.Fractions;
-using NeptuneEvo.GUI;
-using NeptuneEvo.Houses;
 using NeptuneEvo.Events;
-using NeptuneEvo.Functions;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Net.Mail;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Globalization;
-using System.Collections.Concurrent;
-using System.Text.RegularExpressions;
-using Localization;
-using NeptuneEvo.Accounts.Models;
-using NeptuneEvo.Accounts;
-using NeptuneEvo.Players.Models;
-using NeptuneEvo.Players;
-using NeptuneEvo.Character.Models;
-using NeptuneEvo.Character;
+using NeptuneEvo.Fractions;
 using NeptuneEvo.Fractions.Models;
 using NeptuneEvo.Fractions.Player;
+using NeptuneEvo.Functions;
+using NeptuneEvo.GUI;
+using NeptuneEvo.Handles;
+using NeptuneEvo.Houses;
 using NeptuneEvo.Jobs.Models;
 using NeptuneEvo.Organizations.Models;
 using NeptuneEvo.Organizations.Player;
 using NeptuneEvo.PedSystem.Pet.Models;
+using NeptuneEvo.Players;
+using NeptuneEvo.Players.Models;
 using NeptuneEvo.Players.Phone.Messages.Models;
 using NeptuneEvo.Players.Popup.List.Models;
 using NeptuneEvo.Table.Models;
 using NeptuneEvo.VehicleData.LocalData;
 using NeptuneEvo.VehicleData.LocalData.Models;
-using Redage.SDK.Models;
-using Group = NeptuneEvo.Core.Group;
+using Newtonsoft.Json;
 using Org.BouncyCastle.Asn1.X509;
+using Redage.SDK;
+using Redage.SDK.Models;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using static NeptuneEvo.Main;
+using Group = NeptuneEvo.Core.Group;
 
 namespace NeptuneEvo
 {
@@ -511,9 +512,12 @@ namespace NeptuneEvo
         {
             try
             {
+                // Розробка, всі функції мода будуть поки що тут на час тесту.
+                CreateBlip(new BlipData(269, "Тест функціоналу", new Vector3(-438.84863, 1075.2291, 352.43173), 1, true, 1.0f));
+
                 //if (ServerSettings.MoneyMultiplier >= 2) NAPI.Server.SetServerName($"{ServerName} | X{ServerSettings.MoneyMultiplier}"); // NOT WORKING AT 0.3.7
                 //CreateBlip(new BlipData(621, "Quests", new Vector3(343.895447, -1399.03381, 32.509285), 1, true, 1f));
-                
+
                 /*CreateBlip(new BlipData(267, LangFunc.GetText(LangType.Ru, DataName.Parking), new Vector3(-358.4868, -52.37103, 53.29886), 38, true, 0.5f));
                 CreateBlip(new BlipData(267, LangFunc.GetText(LangType.Ru, DataName.Parking), new Vector3(22.71732, -1737.653, 28.18297), 38, true, 0.5f));
                 CreateBlip(new BlipData(267, LangFunc.GetText(LangType.Ru, DataName.Parking), new Vector3(-1646.822, -228.72, 55.92), 38, true, 0.5f));
