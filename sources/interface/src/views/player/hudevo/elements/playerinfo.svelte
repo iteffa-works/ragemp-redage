@@ -91,7 +91,7 @@
 <div class="hudevo__playerinfo">
     <div class="box-flex mb-5">
         <div class="box-column align-end">
-            <div class="hudevo__playerinfo_link">RageMP iTeffa.com</div>
+            <div class="hudevo__playerinfo_link">Server development</div>
             <div class="box-flex">
                 <div class="hudevo__playerinfo_online hudevo__elementparams paramsright">
                     <span class="hudevoicon-person"></span>#{serverPlayerId}
